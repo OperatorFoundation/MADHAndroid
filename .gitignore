@@ -1,3 +1,12 @@
+.DS_Store
+MADH/.DS_Store
+MADH/src/.DS_Store
+MADH/src/main/.DS_Store
+MADH/src/main/kotlin/.DS_Store
+MADH/src/main/kotlin/org/.DS_Store
+MADH/src/main/kotlin/org/operatorfoundation/.DS_Store
+MADH/src/main/kotlin/org/operatorfoundation/madh/.DS_Store
+
 # Gradle files
 .gradle/
 build/
