@@ -46,3 +46,18 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 }
+
+// JitPack publishing configuration
+afterEvaluate {
+    publishing {
+        publications {
+            create<MavenPublication>("release") {
+                from(components["release"])
+
+                groupId = "com.github.OperatorFoundation"
+                artifactId = "MADHAndroid"
+                version = project.findProperty("version")?.toString() ?: "1.0.0"
+            }
+        }
+    }
+}
