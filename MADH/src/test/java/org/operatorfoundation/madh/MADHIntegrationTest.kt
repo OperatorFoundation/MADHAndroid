@@ -2,26 +2,24 @@ package org.operatorfoundation.madh
 
 import org.junit.Test
 import org.junit.Assert.*
-import org.operatorfoundation.madh.types.*
 import java.security.SecureRandom
 
 class MADHIntegrationTest {
 
     @Test
     fun testFullMADHProtocol() {
-        val madh = MADH()
         val random = SecureRandom()
 
         // Step 1: Alice generates her keypair and session identifier
-        val aliceKeyPair = madh.generateKeypair()
+        val aliceKeyPair = MADH.generateKeypair()
         val aliceSessionId = generateSessionIdentifier(random)
 
         // Step 2: Alice computes commitment to her public key and "sends" it to Bob
-        val aliceCommitment = madh.computePublicKeyCommitment(aliceKeyPair.publicKey)
+        val aliceCommitment = MADH.computePublicKeyCommitment(aliceKeyPair.publicKey)
         println("Alice's commitment: ${aliceCommitment.joinToString("") { "%02x".format(it) }}")
 
         // Step 3: Bob generates his keypair and session identifier
-        val bobKeyPair = madh.generateKeypair()
+        val bobKeyPair = MADH.generateKeypair()
         val bobSessionId = generateSessionIdentifier(random)
 
         // Step 4: Bob "sends" his public key and session ID to Alice
@@ -31,7 +29,7 @@ class MADHIntegrationTest {
         println("Alice sends her public key to Bob")
 
         // Step 6: Alice computes confirmation (she is the sender)
-        val aliceConfirmation = madh.computeConfirmation(
+        val aliceConfirmation = MADH.computeConfirmation(
             senderSession = aliceSessionId,
             receiverSession = bobSessionId,
             senderPublicKey = aliceKeyPair.publicKey,
@@ -39,7 +37,7 @@ class MADHIntegrationTest {
         )
 
         // Step 7: Bob computes confirmation (Alice is the sender, Bob is the receiver)
-        val bobConfirmation = madh.computeConfirmation(
+        val bobConfirmation = MADH.computeConfirmation(
             senderSession = aliceSessionId,  // Alice's session (she's the sender)
             receiverSession = bobSessionId,   // Bob's session (he's the receiver)
             senderPublicKey = aliceKeyPair.publicKey,  // Alice's key (she's the sender)
@@ -47,8 +45,8 @@ class MADHIntegrationTest {
         )
 
         // Step 8: Both parties compute confirmation codes
-        val aliceCode = madh.computeConfirmationCode(aliceConfirmation)
-        val bobCode = madh.computeConfirmationCode(bobConfirmation)
+        val aliceCode = MADH.computeConfirmationCode(aliceConfirmation)
+        val bobCode = MADH.computeConfirmationCode(bobConfirmation)
 
         println("Alice's confirmation code: $aliceCode")
         println("Bob's confirmation code: $bobCode")

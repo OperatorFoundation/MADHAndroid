@@ -12,7 +12,7 @@ import java.security.SecureRandom
  * MA-DH (Manually Authenticated Diffie-Hellman) implementation for secure key exchange
  * with out-of-band confirmation.
  */
-class MADH {
+object MADH {
     /**
      * Generates a new Curve25519 key pair for the MA-DH protocol.
      *
